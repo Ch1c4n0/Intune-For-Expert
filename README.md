@@ -44,10 +44,24 @@ The List Sync Devices option displays the date and time of the last synchronizat
 
 The **Force Sync Devices** option forces synchronization between **Intune** and the devices, making it very useful after configuring a policy. It ensures that the changes made are applied immediately to the devices, without having to wait for the standard sync cycle.
 
-##All Devices NonCompliant
+## All Devices NonCompliant
 
 The **All Devices NonCompliant** option displays all devices that are not in compliance with the policies defined in **Microsoft Intune**. This allows administrators to quickly identify devices that do not meet the established security or configuration requirements.
 
 ## List Devices UserPrincipalName
 
 The **List Devices UserPrincipalName** option lists all devices associated with the **UserPrincipalName** in **Microsoft Intune**. This allows administrators to quickly see which devices are linked to a specific user.
+
+## List Serial Number
+
+The **List Serial Number** option displays the serial number of a device through its **ID** in **Microsoft Intune**. This allows administrators to quickly and accurately identify the serial number associated with a specific device.
+
+## List Device Clean UP - Days
+
+A opção **List Device Clean UP - Days** lista a última sincronização de um dispositivo com base em uma quantidade de dias informada no terminal. Isso facilita a configuração do **Device Clean Up** no **Intune**, permitindo que os administradores gerenciem dispositivos que não foram sincronizados dentro do período especificado.
+
+##  Disconnect Microsoft Graph
+
+The **Disconnect Microsoft Graph** option disconnects from **Microsoft Graph**, ensuring a secure environment after the script has been used. This step is important to protect credentials and prevent unauthorized access to the service after the operations are completed.
+
+
