@@ -11,3 +11,17 @@ Our commitment is to create a tool that evolves alongside the demands of profess
 Embrace **Intune For Experts** and follow the evolution of this initiative! 🚀
 
 
+![image](https://github.com/user-attachments/assets/5ffc12da-5322-4ceb-b96e-fc2e6c144335)
+
+## Connection Test (Application)
+
+The **Connection Test (Application)** option is used to perform access tests to **Microsoft Graph** through an application registered in **Entra ID**. This functionality allows you to validate connections and ensure that the application is properly configured to securely and efficiently communicate with Microsoft services.
+
+## Windows Autopilot (Application)
+
+The **Windows Autopilot (Application)** option is used to enroll a device via **Autopilot**, using an application registered in **Entra ID**. This functionality allows you to automate and simplify the provisioning and configuration process of devices directly with the policies and settings defined in the organization.
+
+## Windows Autopilot (Login)
+
+The **Windows Autopilot (Login)** option is used to enroll a device via **Autopilot**, using login credentials and password. This functionality enables users to set up their devices quickly and in compliance with organizational policies, ensuring a simple and efficient experience.
+
