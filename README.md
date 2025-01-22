@@ -25,3 +25,8 @@ The **Windows Autopilot (Application)** option is used to enroll a device via **
 
 The **Windows Autopilot (Login)** option is used to enroll a device via **Autopilot**, using login credentials and password. This functionality enables users to set up their devices quickly and in compliance with organizational policies, ensuring a simple and efficient experience.
 
+## Create Win32 App
+
+The **Create Win32 App** option is used to convert applications into the Win32 format. For this functionality to work correctly, the **IntuneWinAppUtil.exe** file must be located in a folder named **.\Microsoft-Win32-Content-Prep-Tool-master\**. This ensures that the packaging and preparation process for the application is properly executed for use in Microsoft Intune.
+
+![image](https://github.com/user-attachments/assets/5ebde806-d203-4b0e-9d77-da4287ae8c19)
