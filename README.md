@@ -16,7 +16,7 @@ Embrace **Intune For Experts** and follow the evolution of this initiative! 🚀
 
 Application
 
-DeviceManagementManagedDevices.PrivilegedOperations.All
+DeviceManagementManagedDevices.PrivilegedOperations.All <br>
 DeviceManagementManagedDevices.Read.All
 
 ## Connection Test (Application)
