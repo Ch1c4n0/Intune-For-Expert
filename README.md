@@ -11,6 +11,14 @@ Embrace **Intune For Experts** and follow the evolution of this initiative! 🚀
 
 ![image](https://github.com/user-attachments/assets/5ffc12da-5322-4ceb-b96e-fc2e6c144335)
 
+
+ ## Required Graph Api Permissions
+
+Application
+
+DeviceManagementManagedDevices.PrivilegedOperations.All
+DeviceManagementManagedDevices.Read.All
+
 ## Connection Test (Application)
 
 The **Connection Test (Application)** option is used to perform access tests to **Microsoft Graph** through an application registered in **Entra ID**. This functionality allows you to validate connections and ensure that the application is properly configured to securely and efficiently communicate with Microsoft services.
