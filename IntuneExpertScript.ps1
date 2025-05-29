@@ -7,7 +7,7 @@ Clear-Host
 
 function Show-Menu {
     param (
-        [string]$Title = 'Intune For Expert - Marcelo Goncalves MVP Security - v.1 - 2024'
+        [string]$Title = 'Intune For Expert - Marcelo Goncalves MVP Security - v.1.1'
     )
     cls
     Write-Host "================ $Title ================"
@@ -22,6 +22,7 @@ function Show-Menu {
     Write-Host " 9. List Devices UserPrincipalName"
     Write-Host "10. List Serial Number"
     Write-Host "11. List Device Clean UP - Days"
+    Write-Host "12. MSRC Security Updates Windows 11 -Graphical"
     Write-Host "99. Disconnect Microsoft Graph"
     Write-Host " 0. Exit"
 }
@@ -31,7 +32,9 @@ function Run-ConnectionTest {
     $tenantId = Read-Host "Enter your Tenant ID"
     $appSecret = Read-Host "Enter your Application Secret" -AsSecureString
 
-    $appSecretPlainText = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($appSecret))
+    $appSecretPlainText = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto(
+        [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($appSecret)
+    )
 
     $Env:AZURE_CLIENT_ID = $appId
     $Env:AZURE_TENANT_ID = $tenantId
@@ -46,7 +49,9 @@ function Run-WindowsAutopilot {
     $appSecret = Read-Host "Enter your Application Secret" -AsSecureString
     $grouptag = Read-Host "Enter your Group Tag"
 
-    $appSecretPlainText = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($appSecret))
+    $appSecretPlainText = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto(
+        [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($appSecret)
+    )
 
     $Env:AZURE_CLIENT_ID = $appId
     $Env:AZURE_TENANT_ID = $tenantId
@@ -88,30 +93,42 @@ function Install-MicrosoftGraphIntune {
 
 function List-SyncDevices {
     $device = Read-Host "Enter the device name to filter"
-    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.PrivilegedOperations.All", "DeviceManagementManagedDevices.ReadWrite.All", "DeviceManagementManagedDevices.Read.All" -NoWelcome
-    Get-MgDeviceManagementManagedDevice -Filter "contains(deviceName,'$device')" | fl deviceName, ID, lastsyncdatetime
+    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.PrivilegedOperations.All", `
+                      "DeviceManagementManagedDevices.ReadWrite.All", `
+                      "DeviceManagementManagedDevices.Read.All" -NoWelcome
+    Get-MgDeviceManagementManagedDevice -Filter "contains(deviceName,'$device')" | `
+        Format-List deviceName, ID, lastsyncdatetime
 }
 
 function Force-SyncDevices {
     $ID_Device = Read-Host "Enter the device ID to sync"
-    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.ReadWrite.All", "DeviceManagementManagedDevices.Read.All" -NoWelcome
+    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.ReadWrite.All", `
+                      "DeviceManagementManagedDevices.Read.All" -NoWelcome
     Sync-MgDeviceManagementManagedDevice -ManagedDeviceId $ID_Device
 }
 
 function List-NonCompliantDevices {
-    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.PrivilegedOperations.All", "DeviceManagementManagedDevices.ReadWrite.All", "DeviceManagementManagedDevices.Read.All" -NoWelcome
-    Get-MgDeviceManagementManagedDevice -Filter "complianceState eq 'noncompliant' and complianceState ne 'configManager'" | fl deviceName, ID, lastSyncDateTime, complianceState
+    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.PrivilegedOperations.All", `
+                      "DeviceManagementManagedDevices.ReadWrite.All", `
+                      "DeviceManagementManagedDevices.Read.All" -NoWelcome
+    Get-MgDeviceManagementManagedDevice -Filter "complianceState eq 'noncompliant' and complianceState ne 'configManager'" | `
+        Format-List deviceName, ID, lastSyncDateTime, complianceState
 }
 
 function List-DevicesUserPrincipalName {
     $userPrincipalName = Read-Host "Enter the User Principal Name to filter"
-    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.PrivilegedOperations.All", "DeviceManagementManagedDevices.ReadWrite.All", "DeviceManagementManagedDevices.Read.All" -NoWelcome
-    Get-MgDeviceManagementManagedDevice -Filter "contains(UserPrincipalName,'$userPrincipalName')" | fl userPrincipalName, deviceName, ID, lastsyncdatetime
+    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.PrivilegedOperations.All", `
+                      "DeviceManagementManagedDevices.ReadWrite.All", `
+                      "DeviceManagementManagedDevices.Read.All" -NoWelcome
+    Get-MgDeviceManagementManagedDevice -Filter "contains(UserPrincipalName,'$userPrincipalName')" | `
+        Format-List userPrincipalName, deviceName, ID, lastsyncdatetime
 }
 
 function List-SerialNumber {
     $ID_Device = Read-Host "Enter the device ID to filter"
-    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.PrivilegedOperations.All", "DeviceManagementManagedDevices.ReadWrite.All", "DeviceManagementManagedDevices.Read.All" -NoWelcome
+    Connect-MgGraph -Scopes "DeviceManagementManagedDevices.PrivilegedOperations.All", `
+                      "DeviceManagementManagedDevices.ReadWrite.All", `
+                      "DeviceManagementManagedDevices.Read.All" -NoWelcome
     $device = Get-MgDeviceManagementManagedDevice | Where-Object { $_.id -eq $ID_Device }
     if ($device) {
         $serialNumber = $device | Select-Object -ExpandProperty serialNumber
@@ -122,8 +139,6 @@ function List-SerialNumber {
 }
 
 function List-DeviceCleanUpDays {
-   
-
     function Login {
         try {
             Connect-MgGraph -Scopes "DeviceManagementManagedDevices.Read.All" -NoWelcome
@@ -161,7 +176,7 @@ function List-DeviceCleanUpDays {
         }
     }
 
-    # Main script execution
+    # Main execution for device clean up
     Login
     Get-DeviceListForCleanUp
 }
@@ -169,6 +184,115 @@ function List-DeviceCleanUpDays {
 function Disconnect-MicrosoftGraph {
     Disconnect-MgGraph
     Write-Host "Disconnected from Microsoft Graph." -ForegroundColor Green
+}
+
+function Run-MSRCSecurityUpdates {
+    Write-Host "Executing MSRC Security Updates Windows 11..."
+
+    ### Install the module
+    Install-Module MSRCSecurityUpdates -Force
+
+    ### Load the module
+    Import-Module -Name MsrcSecurityUpdates
+
+    # Month Format for MSRC with English month name
+    $Month = (Get-Date).ToString("yyyy-MMM", [System.Globalization.CultureInfo]::InvariantCulture)
+
+    # Enter the Operating System you specifically want to focus on
+    $ClientOS_Type = "Windows 11"
+
+    # Environment Variables
+    $Css = "<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+        color: #FFFFFF;
+        background: #000000;
+    }
+    #title {
+        color: #FFFFFF;
+        font-size: 30px;
+        font-weight: bold;
+        height: 50px;
+        margin-left: 0px;
+        padding-top: 10px;
+    }
+    #subtitle {
+        font-size: 16px;
+        margin-left: 0px;
+        padding-bottom: 10px;
+        color: #FFFFFF;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table td, table th {
+        border: 1px solid #FFFFFF;
+        padding: 3px 7px 2px 7px;
+    }
+    table th {
+        text-align: center;
+        padding-top: 5px;
+        padding-bottom: 4px;
+        background-color: #FFFFFF;
+        color: #000000;
+    }
+    table tr.alt td {
+        color: #000000;
+        background-color: #EAF2D3;
+    }
+    tr.critical {
+        color: white;
+        background-color: red;
+    }
+    </style>"
+
+    $Title = "<span style='font-weight:bold;font-size:24pt'>CVE List for Windows 11 $Month</span>"
+    #$Logo = "<img src='C:\Users\Chicano\OneDrive\MCT\cloudnaquebradav2.png' alt='Logo' height='300' width='300'>"
+    $Header = "<div id='banner'>$Logo</div>`n" +
+              "<div id='title'>$Title</div>`n" +
+              "<div id='subtitle'>Report generated: $(Get-Date)</div>"
+
+    # Main Script Logic
+    $ID = Get-MsrcCvrfDocument -ID $Month
+    $ProductName = Get-MsrcCvrfAffectedSoftware -Vulnerability $ID.Vulnerability -ProductTree $ID.ProductTree |
+                    Where-Object { $_.Severity -in 'Critical', 'Important' -and ($_.FullProductName -match $ClientOS_Type) }
+
+    $Report = $ProductName |
+              Select @{Name='CVE'; Expression={"<a href='https://cve.mitre.org/cgi-bin/cvename.cgi?name=$($_.CVE)' target='_blank'>$($_.CVE)</a>"}},
+                     FullProductName, Severity, Impact,
+                     @{Name='KBArticle'; Expression={($_.KBArticle.ID | Select-Object -Unique) -join ', '}},
+                     @{Name='BaseScore'; Expression={$_.CvssScoreSet.Base}},
+                     @{Name='TemporalScore'; Expression={$_.CvssScoreSet.Temporal}} |
+              ConvertTo-Html -As Table -Fragment | ForEach-Object {
+                  if ($_ -match "<td.*?Critical.*?>") {
+                      $_ -replace "<tr>", "<tr class='critical'>"
+                  } else {
+                      $_
+                  }
+              }
+
+    # Combine CSS, Header, and Report into a full HTML document
+    $HtmlContent = @"
+<html>
+<head>
+    $Css
+</head>
+<body>
+    $Header
+    $Report
+</body>
+</html>
+"@
+
+    # Save the HTML content to a file
+    $htmlFilePath = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), "DeviceListForCleanUp.html")
+    $HtmlContent | Out-File -FilePath $htmlFilePath -Encoding UTF8
+
+    Start-Process $htmlFilePath
+    Write-Host "MSRC Security Updates for Windows 11 have been generated and saved to $htmlFilePath" -ForegroundColor Green
+    Write-Host "Please check the file for details." -ForegroundColor Yellow
 }
 
 do {
@@ -229,6 +353,13 @@ do {
         11 {
             Write-Host "Listing Device Clean UP - Days..."
             List-DeviceCleanUpDays
+            Pause
+        }
+        12 {
+            Write-Host "Ensure that the terminal is running as Administrator." -ForegroundColor Red
+            Pause
+            Write-Host "Running MSRC Security Updates Windows 11..."
+            Run-MSRCSecurityUpdates
             Pause
         }
         99 {
