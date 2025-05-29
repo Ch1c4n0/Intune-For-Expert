@@ -8,8 +8,7 @@ Our commitment is to create a tool that evolves alongside the demands of profess
 
 Embrace **Intune For Experts** and follow the evolution of this initiative! 🚀
 
-
-![image](https://github.com/user-attachments/assets/5ffc12da-5322-4ceb-b96e-fc2e6c144335)
+![image](https://github.com/user-attachments/assets/891f6063-7ff7-46a5-b0ad-dbb60cdec7fa)
 
 
  ## Required Graph Api Permissions
@@ -87,4 +86,7 @@ This functionality reinforces the purpose of Intune for Experts: to simplify the
 
 🚀 Update to version 1.1 and take advantage of this new feature!
 
+![image](https://github.com/user-attachments/assets/36109b7f-14a6-463e-9ae0-e5b35f604000)
+
+![image](https://github.com/user-attachments/assets/5fb452a6-2dcd-47ce-8db7-a2d3cf81f7b0)
 
