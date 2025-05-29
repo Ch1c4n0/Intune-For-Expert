@@ -70,4 +70,21 @@ A opção **List Device Clean UP - Days** lista a última sincronização de um 
 
 The **Disconnect Microsoft Graph** option disconnects from **Microsoft Graph**, ensuring a secure environment after the script has been used. This step is important to protect credentials and prevent unauthorized access to the service after the operations are completed.
 
+# New Option 12 - List Current Month CVEs - version 1.1 ( 2025-May )
+
+
+**We’ve added Option 12 to the Intune for Experts script, which now automatically lists all Common Vulnerabilities and Exposures (CVEs) reported in the current month, based on official information from the Microsoft Security Response Center (MSRC).**
+
+📌 The MSRC investigates security vulnerability reports that affect Microsoft products and services, providing essential guidance to help professionals manage risks and keep systems secure.
+
+✅ This feature generates an HTML page with a summary of the vulnerabilities:
+
+**Critical CVEs are highlighted in red, making it easy for security analysts to stay on high alert and prioritize mitigation efforts.**
+
+Lower-severity vulnerabilities are shown in neutral colors, helping to organize and assess risks effectively.
+
+This functionality reinforces the purpose of Intune for Experts: to simplify the daily tasks of security and operations professionals by providing high-quality, automated, and accessible information.
+
+🚀 Update to version 1.1 and take advantage of this new feature!
+
 
